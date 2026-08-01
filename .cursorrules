@@ -1,0 +1,691 @@
+# MaxTool Project Rules
+
+This file contains coding standards, best practices, and project-specific rules for the MaxTool project.
+
+---
+
+## 1. Code Reusability & Component Patterns
+
+### 1.1 Component Reusability Rules
+
+**CRITICAL: Always check for existing shared components before creating new ones.**
+
+#### Shared Components Location
+- **Shared UI Components**: `components/shared/`
+- **Shared Utilities**: `lib/`
+- **Shared Hooks**: `hooks/` (create if needed)
+
+#### When to Create Shared Components
+
+1. **Usage Instructions Component** - Use `components/shared/UsageInstructions.tsx`
+   - **Rule**: ALL tool components MUST use this component for "How to use" sections
+   - **Pattern**: 
+     ```tsx
+     <UsageInstructions items={['Step 1', 'Step 2', 'Step 3']} />
+     ```
+   - **Impact**: 20 components use this pattern
+
+2. **Text Importer Component** - Use `components/shared/TextImporter.tsx`
+   - **Rule**: Use for any component that imports text/items from textarea
+   - **Pattern**: Components like RandomList, RandomTeam, Roulette, DrawLots
+   - **Impact**: 4 components use this pattern
+
+3. **History Display Component** - Use `components/shared/HistoryDisplay.tsx`
+   - **Rule**: Use for components that display history with clear button
+   - **Pattern**: RandomNumber, FlipCoin, RollDice
+   - **Impact**: 3 components use this pattern
+
+4. **Result Display Component** - Use `components/shared/ResultDisplay.tsx`
+   - **Rule**: Use for displaying results in a consistent format
+   - **Pattern**: RandomNumber, FlipCoin, RollDice, Roulette
+   - **Impact**: 4 components use this pattern
+
+5. **Category Selector Component** - Use `components/shared/CategorySelector.tsx`
+   - **Rule**: Use for category/tab selection UI
+   - **Pattern**: EmojiList, Symbol
+   - **Impact**: 2 components use this pattern
+
+6. **Clickable Grid Component** - Use `components/shared/ClickableGrid.tsx`
+   - **Rule**: Use for grid of clickable items (emojis, symbols)
+   - **Pattern**: EmojiList, Symbol
+   - **Impact**: 2 components use this pattern
+
+7. **Font Tool Base Component** - Use `components/shared/FontToolBase.tsx`
+   - **Rule**: Use for font/text transformation tools
+   - **Pattern**: FontGenerator, InstagramFonts
+   - **Impact**: 2 components (already implemented)
+
+#### Code Reusability Checklist
+
+Before creating a new component or function:
+- [ ] Check `components/shared/` for existing similar components
+- [ ] Check `lib/` for existing utility functions
+- [ ] Check if the pattern appears in 2+ components
+- [ ] If yes, extract to shared component/utility
+- [ ] Document the shared component/utility
+
+---
+
+### 1.2 Utility Functions Reusability
+
+#### Clipboard Utilities
+- **File**: `lib/clipboard-utils.ts`
+- **Rule**: ALL clipboard operations MUST use shared functions
+- **Pattern**: 
+  ```typescript
+  import { copyToClipboard } from '@/lib/clipboard-utils'
+  ```
+
+#### LocalStorage Hook
+- **File**: `hooks/useLocalStorage.ts` (create if needed)
+- **Rule**: Use for any localStorage save/load operations
+- **Pattern**: Counter, Scoreboard, DrawLots
+
+#### Timer Hook
+- **File**: `hooks/useTimer.ts` (create if needed)
+- **Rule**: Use for any timer/countdown logic
+- **Pattern**: CountdownTimer, Stopwatch, PomodoroTimer
+
+#### Time Formatting
+- **File**: `lib/time-utils.ts` (create if needed)
+- **Rule**: Use for time formatting functions
+- **Pattern**: CountdownTimer, Stopwatch, PomodoroTimer
+
+#### Font Transformation
+- **File**: `lib/font-utils.ts` (already exists)
+- **Rule**: Use for font/text transformation
+- **Pattern**: FontGenerator, InstagramFonts
+
+---
+
+## 2. Code Language Standards
+
+### 2.1 English-Only Code Rule
+
+**CRITICAL: All source code files (excluding `docs/` directory) MUST use English.**
+
+#### Must Use English
+- ✅ Code comments (single-line, multi-line, JSDoc)
+- ✅ Variable and function names
+- ✅ Error messages
+- ✅ Console output
+- ✅ String literals (internal)
+- ✅ Type definitions
+
+#### Allowed Chinese
+- ✅ `docs/` directory files
+- ✅ `README.md`
+- ✅ `env.example` comments
+
+#### Forbidden Chinese
+- ❌ All source files (`app/`, `components/`, `lib/`, `types/`)
+- ❌ Code comments
+- ❌ Variable/function names
+- ❌ Error messages
+- ❌ Console output
+
+---
+
+## 3. Brand Information Standards
+
+### 3.1 Brand Configuration
+
+**CRITICAL: Always use centralized brand configuration.**
+
+#### Configuration File
+- **File**: `lib/metadata.ts`
+- **Variable**: `siteConfig`
+
+#### Brand Information
+```typescript
+export const siteConfig = {
+  name: 'MaxTool',
+  shortName: 'MaxTool',
+  domain: 'maxtool.me',
+  url: 'https://maxtool.me',
+  description: 'Free online tools for everyday tasks. Simple, fast, and no registration required.',
+  slogan: 'Free Online Tools - Simple & Fast',
+}
+```
+
+#### Rules
+- ✅ ALWAYS import from `lib/metadata.ts`
+- ✅ NEVER hardcode brand information
+- ✅ Use `siteConfig.name` instead of "MaxTool" string
+- ✅ Use `siteConfig.url` instead of hardcoded URLs
+
+---
+
+## 4. SEO Standards
+
+### 4.1 Metadata Generation
+
+**CRITICAL: Use centralized metadata generation functions.**
+
+#### Functions Location
+- **File**: `lib/metadata.ts`
+
+#### Usage Rules
+- ✅ Homepage: Use `generateBaseMetadata()`
+- ✅ Tool pages: Use `generateToolMetadata(toolName, toolDescription, toolPath)`
+- ✅ Category pages: Use `generateCategoryMetadata(categoryName, categoryPath, toolCount)`
+
+#### Structured Data
+- **File**: `lib/structured-data.ts`
+- **Component**: `components/shared/StructuredData.tsx`
+- **Rule**: All pages MUST include appropriate structured data
+
+### 4.2 URL Path SEO Optimization
+
+**CRITICAL: Tool URLs MUST use two-level category structure for SEO.**
+
+#### URL Structure Requirements
+- ✅ **Format**: `/tools/[category]/[tool-id]`
+- ✅ **Categories**: `random`, `time`, `text`, `utilities`, `other`
+- ✅ **SEO Benefit**: Category keywords in URL improve search rankings
+- ✅ **Category Pages**: `/tools/[category]` provides category-level SEO
+
+#### Sitemap Configuration
+- **File**: `app/sitemap.ts`
+- **Rule**: Include both tool pages and category pages
+- **Priority**:
+  - Tool pages: `priority: 1.0`
+  - Category pages: `priority: 0.9`
+  - Legacy category pages: `priority: 0.8`
+
+#### Breadcrumb Navigation
+- **File**: `components/shared/Breadcrumb.tsx`
+- **Rule**: Support `/tools/[category]/[tool-id]` path format
+- **Pattern**: `Home > [Category] Tools > [Tool Name]`
+
+---
+
+## 5. Theme & Styling Standards
+
+### 5.1 Theme Variables
+
+**CRITICAL: Use theme variables, NEVER hardcode colors.**
+
+#### Theme Variables Location
+- **File**: `app/globals.css`
+- **Pattern**: Use CSS variables defined in `@theme` and `@layer theme .dark`
+
+#### Color Usage Rules
+- ✅ Use semantic color variables: `bg-accent`, `text-accent`, `bg-error`, `text-error`
+- ✅ Use theme-aware colors: `bg-bg-primary`, `text-text-primary`, `border-border`
+- ❌ NEVER use hardcoded colors: `bg-blue-500`, `text-red-600`, `dark:bg-gray-900`
+
+#### Semantic Colors Available
+- `accent`, `accent-hover`, `accent-light`
+- `success`, `success-bg`, `success-text`, `success-border`
+- `error`, `error-bg`, `error-text`, `error-border`
+- `warning`, `warning-bg`, `warning-text`, `warning-border`
+- `info`, `info-bg`, `info-text`, `info-border`
+
+#### Dark Mode Support
+- ✅ ALL components MUST support dark mode
+- ✅ Use theme variables that automatically adapt
+- ✅ Test in both light and dark modes
+
+---
+
+## 6. URL & Routing Standards
+
+### 6.1 URL Path Structure (CRITICAL)
+
+**CRITICAL: All tool URLs MUST use two-level category structure for SEO optimization.**
+
+#### Tool URL Format
+- **Format**: `/tools/[category]/[tool-id]`
+- **Example**: `/tools/random/random-number`, `/tools/time/countdown-timer`
+- **Categories**: `random`, `time`, `text`, `utilities`, `other`
+
+#### Rules
+- ✅ **MUST use two-level path**: `/tools/[category]/[tool-id]`
+- ✅ Use lowercase: `/tools/random/random-number` (correct)
+- ✅ Use kebab-case: `/tools/random/random-number` (correct)
+- ✅ Use hyphens: `/tools/random/random-number` (correct)
+- ❌ **NEVER use flat path**: `/tools/random-number` (wrong - only for legacy)
+- ❌ No uppercase: `/tools/Random/RandomNumber` (wrong)
+- ❌ No underscores: `/tools/random/random_number` (wrong)
+- ❌ No spaces: `/tools/random/random number` (wrong)
+
+#### SEO Benefits
+- ✅ Category keywords in URL (`random`, `time`, `text`, `utilities`)
+- ✅ Supports category aggregation pages (`/tools/[category]`)
+- ✅ Better internal linking structure
+- ✅ Clearer hierarchy for search engines
+
+#### Path Generation
+- **File**: `lib/tools-data.ts`
+- **Rule**: All tool `path` fields MUST follow `/tools/[category]/[tool-id]` format
+- **Example**:
+  ```typescript
+  {
+    id: 'random-number',
+    category: 'Random',
+    path: '/tools/random/random-number',  // ✅ Correct
+    // path: '/tools/random-number',      // ❌ Wrong
+  }
+  ```
+
+### 6.2 Routing Structure
+
+#### Dynamic Routes (REQUIRED)
+- **Tool pages**: `app/tools/[category]/[tool-id]/page.tsx`
+- **Category pages**: `app/tools/[category]/page.tsx`
+- **Rule**: NEVER create static route files for individual tools
+- **Rule**: Use dynamic routes with `generateStaticParams()` for SSG
+
+#### Component Loading
+- **File**: `lib/tools/components.ts`
+- **Rule**: Use `getToolComponent(toolId)` for dynamic component loading
+- **Pattern**:
+  ```typescript
+  import { getToolComponent } from '@/lib/tools/components'
+  const ToolComponent = await getToolComponent(tool.id)
+  ```
+
+#### Category Pages
+- **Path**: `/tools/[category]`
+- **Purpose**: Display all tools in a category
+- **SEO**: Supports category-level keywords and aggregation
+- **Note**: `/category/[category]` pages also exist (legacy), both can coexist
+
+---
+
+## 7. Environment Variables Standards
+
+### 7.1 Naming Convention
+
+#### Client-Side Variables
+- **Prefix**: `NEXT_PUBLIC_`
+- **Example**: `NEXT_PUBLIC_GA_ID`
+- **Rule**: Only for variables needed in browser
+
+#### Server-Side Variables
+- **No prefix**: No `NEXT_PUBLIC_`
+- **Example**: `SUPABASE_URL`, `DB_PASSWORD`
+- **Rule**: For server-only variables (security)
+
+#### Critical Variables
+- `SUPABASE_URL` - Server-side only
+- `SUPABASE_ANON_KEY` - Server-side only
+- `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD` - Server-side only
+
+---
+
+## 8. Component Structure Standards
+
+### 8.1 Tool Component Structure
+
+#### Standard Structure
+```tsx
+'use client'
+
+import { useState, useEffect } from 'react'
+import Button from '@/components/ui/Button'
+import Input from '@/components/ui/Input'
+import { trackUsage } from '@/lib/tracking'
+import UsageInstructions from '@/components/shared/UsageInstructions'
+
+export default function ToolName() {
+  // 1. State declarations
+  const [state, setState] = useState(...)
+  
+  // 2. Effects (if needed)
+  useEffect(() => { ... }, [])
+  
+  // 3. Event handlers
+  const handleAction = () => { ... }
+  
+  // 4. Render
+  return (
+    <div className="space-y-6">
+      {/* Input/Controls */}
+      {/* Display/Output */}
+      <UsageInstructions items={[...]} />
+    </div>
+  )
+}
+```
+
+#### Required Elements
+- ✅ Usage instructions using `UsageInstructions` component
+- ✅ Proper error handling
+- ✅ Dark mode support
+- ✅ Responsive design
+- ✅ Usage tracking (on actual use, not on mount)
+
+---
+
+## 9. Error Handling Standards
+
+### 9.1 Error Messages
+
+#### Rules
+- ✅ Use English error messages
+- ✅ Provide clear, actionable error descriptions
+- ✅ Include context information
+
+#### Example
+```typescript
+throw new Error('Database connection failed. Please check your environment variables.')
+```
+
+---
+
+## 10. Testing & Quality Standards
+
+### 10.1 Code Quality Checklist
+
+Before committing code:
+- [ ] All comments in English
+- [ ] All variable/function names in English
+- [ ] No hardcoded brand information
+- [ ] Using theme variables (no hardcoded colors)
+- [ ] Dark mode tested
+- [ ] Responsive design tested
+- [ ] Shared components used where applicable
+- [ ] No duplicate code patterns
+
+---
+
+## 11. File Organization Standards
+
+### 11.1 Directory Structure
+
+```
+components/
+  shared/          # Shared components (reusable across tools)
+  tools/           # Tool-specific components (organized by category)
+    random/        # Random category tools
+    time/          # Time category tools
+    text/          # Text category tools
+    utilities/     # Utilities category tools
+  ui/              # Base UI components (Button, Input, etc.)
+
+lib/
+  tools/
+    components.ts  # Tool component mapping and loader
+    data/          # Tool data (can be split by category if needed)
+  *.ts             # Utility functions, shared logic
+
+hooks/
+  *.ts             # Custom React hooks (create if needed)
+
+app/
+  tools/
+    [category]/           # Dynamic category route
+      page.tsx             # Category page
+      [tool-id]/
+        page.tsx           # Tool page (dynamic route)
+  category/        # Legacy category pages (can coexist)
+```
+
+### 11.2 Tool Component Organization (CRITICAL)
+
+**CRITICAL: All tool components MUST be organized by category.**
+
+#### Required Structure
+```
+components/tools/
+  ├── random/          # Random category (7 tools)
+  │   ├── DrawLots.tsx
+  │   ├── RandomNumber.tsx
+  │   ├── FlipCoin.tsx
+  │   ├── RollDice.tsx
+  │   ├── Roulette.tsx
+  │   ├── RandomTeam.tsx
+  │   └── RandomList.tsx
+  ├── time/            # Time category (5 tools)
+  │   ├── DigitalClock.tsx
+  │   ├── CountdownTimer.tsx
+  │   ├── Stopwatch.tsx
+  │   ├── PomodoroTimer.tsx
+  │   └── AnalogClock.tsx
+  ├── text/            # Text category (3 tools)
+  │   ├── FontGenerator.tsx
+  │   ├── InstagramFonts.tsx
+  │   └── TextToSpeech.tsx
+  └── utilities/       # Utilities category (5 tools)
+      ├── Counter.tsx
+      ├── Scoreboard.tsx
+      ├── Symbol.tsx
+      ├── EmojiList.tsx
+      └── PercentageCalculator.tsx
+```
+
+#### Rules
+- ✅ **MUST organize by category**: Each tool component in its category folder
+- ✅ **Category folders**: `random/`, `time/`, `text/`, `utilities/`
+- ✅ **Component mapping**: Register in `lib/tools/components.ts`
+- ❌ **NEVER place tools directly in `components/tools/`** (flat structure)
+- ❌ **NEVER create static route files** for individual tools
+
+#### Component Registration
+- **File**: `lib/tools/components.ts`
+- **Rule**: All tool components MUST be registered in `toolComponentMap`
+- **Pattern**:
+  ```typescript
+  export const toolComponentMap: Record<string, () => Promise<{ default: ComponentType<any> }>> = {
+    'random-number': () => import('@/components/tools/random/RandomNumber'),
+    'flip-coin': () => import('@/components/tools/random/FlipCoin'),
+    // ...
+  }
+  ```
+
+#### Benefits
+- ✅ Clear logical grouping by functionality
+- ✅ Easy to locate specific tools
+- ✅ Supports code splitting by category
+- ✅ Scalable to 100-200+ tools
+- ✅ Better IDE performance (fewer files per folder)
+
+### 11.3 Naming Conventions
+
+#### Components
+- ✅ PascalCase: `FontGenerator.tsx`, `UsageInstructions.tsx`
+- ✅ Descriptive names: `HistoryDisplay.tsx` not `History.tsx`
+- ✅ Location: `components/tools/[category]/ComponentName.tsx`
+
+#### Utilities
+- ✅ camelCase: `clipboard-utils.ts`, `time-utils.ts`
+- ✅ Descriptive names with purpose: `font-utils.ts`
+
+#### Hooks
+- ✅ camelCase with `use` prefix: `useLocalStorage.ts`, `useTimer.ts`
+
+#### Tool IDs
+- ✅ Use kebab-case: `random-number`, `flip-coin`, `countdown-timer`
+- ✅ Descriptive and SEO-friendly
+- ✅ Match component file names (without extension)
+
+---
+
+## 12. Performance Standards
+
+### 12.1 Optimization Rules
+
+- ✅ Use `useMemo` for expensive calculations
+- ✅ Use `useCallback` for event handlers passed to children
+- ✅ Lazy load heavy components when possible
+- ✅ Optimize images and assets
+- ✅ Minimize re-renders
+
+---
+
+## 13. Accessibility Standards
+
+### 13.1 Accessibility Rules
+
+- ✅ Use semantic HTML elements
+- ✅ Provide ARIA labels where needed
+- ✅ Ensure keyboard navigation works
+- ✅ Maintain proper color contrast
+- ✅ Support screen readers
+
+---
+
+## 14. Documentation Standards
+
+### 14.1 Code Documentation
+
+#### JSDoc Comments
+```typescript
+/**
+ * Transforms text using Unicode code point ranges
+ * @param text - Input text to transform
+ * @param uppercaseStart - Unicode code point for uppercase A
+ * @param lowercaseStart - Unicode code point for lowercase a
+ * @returns Transformed text with special characters
+ */
+export function transformWithCodePoint(...) { ... }
+```
+
+#### Component Documentation
+- ✅ Document props with TypeScript interfaces
+- ✅ Add JSDoc comments for complex components
+- ✅ Include usage examples in comments
+
+---
+
+## 15. Git & Version Control Standards
+
+### 15.1 Commit Message Rules
+
+- ✅ Use clear, descriptive commit messages
+- ✅ Reference issue numbers if applicable
+- ✅ Use English for commit messages
+
+---
+
+## 16. Refactoring Guidelines
+
+### 16.1 When to Refactor
+
+Refactor when:
+- ✅ Same pattern appears in 2+ components
+- ✅ Code duplication > 10 lines
+- ✅ Component becomes hard to maintain
+- ✅ Performance issues identified
+
+### 16.2 Refactoring Process
+
+1. Identify duplicate patterns
+2. Create shared component/utility
+3. Update all affected components
+4. Test thoroughly
+5. Update documentation
+
+---
+
+## 17. Project-Specific Rules
+
+### 17.1 Tool Usage Tracking
+
+- ✅ Track usage on actual user interaction (not on mount)
+- ✅ Use `trackUsage(toolId)` from `@/lib/tracking`
+- ✅ Only track once per session (use `hasTracked` state)
+
+### 17.2 LocalStorage Usage
+
+- ✅ Use `saveToStorage()` and `getFromStorage()` from `@/lib/utils`
+- ✅ Provide meaningful storage keys
+- ✅ Handle storage errors gracefully
+
+### 17.3 Theme Provider
+
+- ✅ Wrap app with `ThemeProvider` from `@/components/shared/ThemeProvider`
+- ✅ Use `useTheme()` hook for theme access
+- ✅ Never access `localStorage` directly for theme
+
+---
+
+## 18. Code Review Checklist
+
+Before submitting code for review:
+- [ ] Follows all coding standards
+- [ ] Uses shared components where applicable
+- [ ] No duplicate code patterns
+- [ ] All comments in English
+- [ ] Dark mode tested
+- [ ] Responsive design tested
+- [ ] Error handling implemented
+- [ ] Usage tracking implemented correctly
+- [ ] No hardcoded values (brand, colors, URLs)
+- [ ] Tool components organized by category
+- [ ] Tool URLs use `/tools/[category]/[tool-id]` format
+- [ ] Component registered in `lib/tools/components.ts`
+- [ ] Dynamic routes used (no static route files for tools)
+
+---
+
+## 19. Scalability & Architecture Standards
+
+### 19.1 Code Organization for Scale
+
+**CRITICAL: Project designed to scale from 20 to 100-200+ tools.**
+
+#### Component Organization
+- ✅ **MUST organize by category**: `components/tools/[category]/`
+- ✅ **Each category folder**: Contains 5-30 tools (manageable size)
+- ✅ **Component mapping**: Centralized in `lib/tools/components.ts`
+- ❌ **NEVER use flat structure** for 30+ tools
+
+#### Routing Architecture
+- ✅ **Dynamic routes ONLY**: `app/tools/[category]/[tool-id]/page.tsx`
+- ✅ **Single route file**: Handles all tools (scalable to 100-200+)
+- ❌ **NEVER create static route files** for individual tools
+- ✅ **SSG support**: Use `generateStaticParams()` for performance
+
+#### Data Organization
+- ✅ **Centralized data**: `lib/tools-data.ts` (can split by category if > 200 tools)
+- ✅ **Path format**: All tools use `/tools/[category]/[tool-id]`
+- ✅ **Category consistency**: Tool category matches folder structure
+
+### 19.2 URL Path Stability
+
+**CRITICAL: URLs are permanent once published - design carefully before launch.**
+
+#### Path Design Principles
+- ✅ **Two-level structure**: `/tools/[category]/[tool-id]` (final format)
+- ✅ **SEO optimized**: Category keywords in URL
+- ✅ **Future-proof**: Supports 100-200+ tools without restructuring
+- ❌ **Avoid changes**: Once URLs are public, avoid major path restructuring
+
+#### Migration Strategy
+- ✅ **Before launch**: Can freely choose optimal structure
+- ⚠️ **After launch**: URL changes require 301 redirects and SEO recovery
+- ✅ **Current status**: Not yet launched - using optimal two-level structure
+
+### 19.3 Adding New Tools
+
+#### Required Steps
+1. **Create component** in appropriate category folder: `components/tools/[category]/NewTool.tsx`
+2. **Register component** in `lib/tools/components.ts`:
+   ```typescript
+   'new-tool-id': () => import('@/components/tools/[category]/NewTool'),
+   ```
+3. **Add tool data** in `lib/tools-data.ts`:
+   ```typescript
+   {
+     id: 'new-tool-id',
+     category: 'Category',
+     path: '/tools/category/new-tool-id',  // MUST use two-level format
+     // ...
+   }
+   ```
+4. **Verify**: Component automatically available via dynamic route
+
+#### Rules
+- ✅ Component MUST be in category folder
+- ✅ Component MUST be registered in `lib/tools/components.ts`
+- ✅ Path MUST follow `/tools/[category]/[tool-id]` format
+- ❌ NEVER create static route file for new tool
+
+---
+
+**Last Updated**: 2024-XX-XX  
+**Maintainer**: Project Team
+

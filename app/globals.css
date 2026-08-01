@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+/* Theme variable definitions */
+@theme {
+  /* Background colors */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f5f5f5;
+  --color-bg-card: #ffffff;
+  --color-bg-hover: #e5e5e5;
+  
+  /* Text colors */
+  --color-text-primary: #171717;
+  --color-text-secondary: #666666;
+  --color-text-muted: #999999;
+  
+  /* Border colors */
+  --color-border: #e5e5e5;
+  --color-border-light: #f0f0f0;
+  
+  /* Accent colors */
+  --color-accent: #3b82f6;        /* blue-500 */
+  --color-accent-hover: #2563eb;  /* blue-600 */
+  --color-accent-light: #60a5fa;  /* blue-400 */
+  
+  /* Secondary button colors */
+  --color-secondary: #e5e7eb;     /* gray-200 */
+  --color-secondary-hover: #d1d5db; /* gray-300 */
+  
+  /* Semantic colors - Success */
+  --color-success: #10b981;        /* green-500 */
+  --color-success-bg: #d1fae5;      /* green-100 */
+  --color-success-text: #065f46;   /* green-800 */
+  --color-success-hover: #059669;  /* green-600 */
+  
+  /* Semantic colors - Error */
+  --color-error: #ef4444;          /* red-500 */
+  --color-error-bg: #fee2e2;       /* red-100 */
+  --color-error-text: #991b1b;    /* red-800 */
+  --color-error-hover: #dc2626;    /* red-600 */
+  
+  /* Semantic colors - Warning */
+  --color-warning: #f59e0b;        /* amber-500 */
+  --color-warning-bg: #fef3c7;     /* amber-100 */
+  --color-warning-text: #78350f;   /* amber-800 */
+  --color-warning-hover: #d97706;   /* amber-600 */
+  
+  /* Semantic colors - Info */
+  --color-info: #3b82f6;           /* blue-500 */
+  --color-info-bg: #dbeafe;        /* blue-100 */
+  --color-info-text: #1e40af;      /* blue-800 */
+  --color-info-hover: #2563eb;     /* blue-600 */
+  
+  /* Fonts */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Dark mode variables */
+@layer theme {
+  .dark {
+    /* Background colors */
+    --color-bg-primary: #0f172a;    /* slate-900 */
+    --color-bg-secondary: #1e293b;  /* slate-800 */
+    --color-bg-card: #1e293b;       /* slate-800 */
+    --color-bg-hover: #334155;      /* slate-700 */
+    
+    /* Text colors */
+    --color-text-primary: #f8fafc;  /* slate-50 */
+    --color-text-secondary: #cbd5e1; /* slate-300 */
+    --color-text-muted: #94a3b8;    /* slate-400 */
+    
+    /* Border colors */
+    --color-border: #334155;        /* slate-700 */
+    --color-border-light: #475569;  /* slate-600 */
+    
+    /* Accent colors - adjusted for better visual comfort in dark mode */
+    --color-accent: #1e40af;        /* blue-800 (softer and more comfortable for dark mode) */
+    --color-accent-hover: #1e3a8a;  /* blue-900 (darker for hover state) */
+    --color-accent-light: #1d4ed8;  /* blue-700 (for light accents) */
+    
+    /* Secondary button colors */
+    --color-secondary: #475569;     /* slate-600 */
+    --color-secondary-hover: #64748b; /* slate-500 */
+    
+    /* Semantic colors - Success (Dark mode) */
+    --color-success: #10b981;        /* green-500 */
+    --color-success-bg: #064e3b;     /* green-900 */
+    --color-success-text: #6ee7b7;   /* green-300 */
+    --color-success-hover: #059669;   /* green-600 */
+    
+    /* Semantic colors - Error (Dark mode) */
+    --color-error: #ef4444;          /* red-500 */
+    --color-error-bg: #7f1d1d;       /* red-900 */
+    --color-error-text: #fca5a5;     /* red-300 */
+    --color-error-hover: #dc2626;    /* red-600 */
+    
+    /* Semantic colors - Warning (Dark mode) */
+    --color-warning: #f59e0b;        /* amber-500 */
+    --color-warning-bg: #78350f;      /* amber-900 */
+    --color-warning-text: #fcd34d;   /* amber-300 */
+    --color-warning-hover: #d97706;   /* amber-600 */
+    
+    /* Semantic colors - Info (Dark mode) */
+    --color-info: #3b82f6;           /* blue-500 */
+    --color-info-bg: #1e3a8a;        /* blue-900 */
+    --color-info-text: #93c5fd;      /* blue-300 */
+    --color-info-hover: #2563eb;      /* blue-600 */
+  }
+}
+
+/* System preference as fallback */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+  }
+}
+
+/* Ensure dark mode is applied to html element */
+html.dark {
+  color-scheme: dark;
+}
+
+/* Base styles */
+body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: Arial, Helvetica, sans-serif;
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+
+/* Smooth transitions for theme-dependent elements */
+html {
+  transition: color-scheme 0.15s ease-in-out;
+}
+
+/* Apply smooth transitions using CSS custom properties - more performant */
+:root {
+  --transition-theme: background-color 0.15s ease-in-out, 
+                      color 0.15s ease-in-out, 
+                      border-color 0.15s ease-in-out;
+}
+
+/* Apply to common interactive and content elements */
+[class*="bg-"],
+[class*="text-"],
+[class*="border-"] {
+  transition: var(--transition-theme);
+}
+
+/* Ensure body and main containers transition smoothly */
+body,
+main,
+header,
+footer,
+section,
+article {
+  transition: var(--transition-theme);
+}

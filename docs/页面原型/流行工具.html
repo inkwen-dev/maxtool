@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popular Tools - Free Online Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 顶部导航栏 -->
+    <nav class="fixed top-0 w-full bg-white shadow-sm z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a href="首页.html" class="text-2xl font-bold text-gray-900">Tools</a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="分类页面.html" class="text-gray-600 hover:text-gray-900 transition font-medium">Random</a>
+                    <a href="分类页面.html" class="text-gray-600 hover:text-gray-900 transition font-medium">Time</a>
+                    <a href="分类页面.html" class="text-gray-600 hover:text-gray-900 transition font-medium">Text</a>
+                    <a href="分类页面.html" class="text-gray-600 hover:text-gray-900 transition font-medium">Utilities</a>
+                    <a href="所有工具.html" class="text-gray-600 hover:text-gray-900 transition font-medium">All Tools</a>
+                </div>
+                <div class="hidden md:block">
+                    <input 
+                        type="text" 
+                        placeholder="Search tools..."
+                        class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
+                    />
+                </div>
+                <button class="md:hidden text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="pt-24 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="text-4xl">🔥</span>
+                <div>
+                    <h1 class="text-4xl font-bold text-gray-900 mb-2">Popular Tools</h1>
+                    <p class="text-gray-600">Most used tools by our users</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-2 text-sm text-gray-600">
+                <a href="首页.html" class="hover:text-gray-900">Home</a>
+                <span>/</span>
+                <span>Popular Tools</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工具列表 -->
+    <section class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 抽签工具 -->
+            <a href="工具详情.html" class="block p-6 bg-white rounded-lg border border-gray-200 hover:shadow-md hover:border-blue-500 transition">
+                <div class="flex items-start gap-4">
+                    <div class="text-4xl">🎲</div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <h3 class="text-lg font-semibold text-gray-900">Draw Lots</h3>
+                            <span class="px-2 py-0.5 bg-red-100 text-red-600 text-xs font-medium rounded">#1</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Randomly select from a list with exclusion</p>
+                        <div class="flex items-center gap-4 text-xs text-gray-500">
+                            <span>⭐ 4.9</span>
+                            <span>👁️ 12.5k views</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 随机数生成器 -->
+            <a href="工具详情.html" class="block p-6 bg-white rounded-lg border border-gray-200 hover:shadow-md hover:border-blue-500 transition">
+                <div class="flex items-start gap-4">
+                    <div class="text-4xl">🔢</div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <h3 class="text-lg font-semibold text-gray-900">Random Number</h3>
+                            <span class="px-2 py-0.5 bg-orange-100 text-orange-600 text-xs font-medium rounded">#2</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Generate random numbers in range</p>
+                        <div class="flex items-center gap-4 text-xs text-gray-500">
+                            <span>⭐ 4.8</span>
+                            <span>👁️ 10.2k views</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 抛硬币 -->
+            <a href="工具详情.html" class="block p-6 bg-white rounded-lg border border-gray-200 hover:shadow-md hover:border-blue-500 transition">
+                <div class="flex items-start gap-4">
+                    <div class="text-4xl">🪙</div>
+                    <div class="flex-1">
+                        <div class="flex items-center gap-2 mb-2">
+                            <h3 class="text-lg font-semibold text-gray-900">Flip a Coin</h3>
+                            <span class="px-2 py-0.5 bg-yellow-100 text-yellow-600 text-xs font-medium rounded">#3</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-3">Flip with 3D animation</p>
+                        <div class="flex items-center gap-4 text-xs text-gray-500">
+                            <span>⭐ 4.7</span>
+                            <span>👁️ 8.9k views</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 倒计时器 -->
+            <a href="工具详情.html" class="block p-6 bg-white rounded-lg border border-gray-200 hover:shadow-md hover:border-blue-500 transition">
+                <div class="flex items-start gap-4">
+                    <div class="text-4xl">⏱️</div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold mb-2 text-gray-900">Countdown Timer</h3>
+                        <p class="text-sm text-gray-600 mb-3">Set timer with controls</p>
+                        <div class="flex items-center gap-4 text-xs text-gray-500">
+                            <span>⭐ 4.6</span>
+                            <span>👁️ 7.5k views</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 计数器 -->
+            <a href="工具详情.html" class="block p-6 bg-white rounded-lg border border-gray-200 hover:shadow-md hover:border-blue-500 transition">
+                <div class="flex items-start gap-4">
+                    <div class="text-4xl">🔢</div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold mb-2 text-gray-900">Counter</h3>
+                        <p class="text-sm text-gray-600 mb-3">Simple increment counter</p>
+                        <div class="flex items-center gap-4 text-xs text-gray-500">
+                            <span>⭐ 4.5</span>
+                            <span>👁️ 6.8k views</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 秒表 -->
+            <a href="工具详情.html" class="block p-6 bg-white rounded-lg border border-gray-200 hover:shadow-md hover:border-blue-500 transition">
+                <div class="flex items-start gap-4">
+                    <div class="text-4xl">⏱️</div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold mb-2 text-gray-900">Stopwatch</h3>
+                        <p class="text-sm text-gray-600 mb-3">Precise time tracking</p>
+                        <div class="flex items-center gap-4 text-xs text-gray-500">
+                            <span>⭐ 4.4</span>
+                            <span>👁️ 5.2k views</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-white border-t border-gray-200 py-12 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center text-sm text-gray-600">
+                <p>© 2024 Tools. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+
