@@ -53,6 +53,7 @@ export default function RootLayout({
             `,
           }}
         />
+        <meta name="google-adsense-account" content={siteConfig.adsenseClient} />
         <script
           async
           src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig.adsenseClient}`}
