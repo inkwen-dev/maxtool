@@ -26,6 +26,7 @@ export const siteConfig = {
   publisher: 'MaxTool',
   locale: 'en_US',
   type: 'website',
+  adsenseClient: 'ca-pub-6778078437853549',
 }
 
 /**
